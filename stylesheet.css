@@ -1,1 +1,627 @@
+        body {
+          font-family: sans-serif;
+            background: #111;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            padding: 20px;
+        }
 
+        #game {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 10px;
+            width: 800px;
+            height: 600px;
+            text-align: center;
+        }
+
+        #top-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #top-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #middle-left {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #middle-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #middle-right {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #bottom-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0;
+            color: #fff;
+        }
+
+        .gacha-btn, .rule-btn, .skill-menu-btn, .ranking-btn {
+            background: #444;
+            border: 2px solid #666;
+            color: #fff;
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gacha-btn:hover, .rule-btn:hover, .skill-menu-btn:hover, .ranking-btn:hover {
+            background: #666;
+            border-color: #999;
+            transform: scale(1.1);
+        }
+
+        #info {
+            margin-bottom: 0;
+            font-size: 16px;
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .info-row {
+            margin: 5px 0;
+        }
+
+        #board-container {
+            flex: 1;
+            position: relative;
+            display: inline-block;
+        }
+
+        #board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-gap: 5px;
+            background: #333;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .pause-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .pause-overlay.show {
+            display: flex;
+        }
+
+        .pause-message {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .pause-instruction {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #555;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 24px;
+            border-radius: 3px;
+            transition: all 0.1s;
+        }
+
+        .empty {
+            background: #555;
+            color: #999;
+            font-size: 10px;
+        }
+
+        .hole {
+            background: #000;
+            border: 2px solid #333;
+        }
+
+        .danger {
+            box-shadow: inset 0 0 0 3px #ff0000;
+            animation: danger-pulse 0.5s infinite alternate;
+        }
+
+        @keyframes danger-pulse {
+            from { box-shadow: inset 0 0 0 3px #ff0000; }
+            to { box-shadow: inset 0 0 0 3px #ff6666; }
+        }
+
+        .v2 { background: #eee; color: #000; }
+        .v4 { background: #ddd; color: #000; }
+        .v8 { background: #f2b179; }
+        .v16 { background: #f59563; }
+        .v32 { background: #f67c5f; }
+        .v64 { background: #f65e3b; }
+        .v128 { background: #edcf72; color: #000; }
+        .v256 { background: #edcc61; color: #000; }
+        .v512 { background: #edc850; color: #000; }
+        .v1024 { background: #edc53f; color: #000; }
+        .v2048 { background: #edc22e; color: #000; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid #666;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid #666;
+            padding-bottom: 10px;
+        }
+
+        .modal-content h3 {
+            color: #ffd700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .rule-text ul {
+            text-align: left;
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .rule-text li {
+            margin: 5px 0;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .gacha-info, .skill-info {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .gacha-get-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 2px solid #ff9800;
+            color: #000;
+            font-size: 18px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 15px 0;
+        }
+
+        .gacha-get-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        .gacha-result {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .gacha-result.hidden {
+            display: none;
+        }
+
+        .gacha-card {
+            width: 80px;
+            height: 110px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            animation: cardFlip 0.6s ease-out;
+        }
+
+        @keyframes cardFlip {
+            from {
+                transform: rotateY(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        .skill-selection {
+            margin: 20px 0;
+        }
+
+        .skill-selection.hidden {
+            display: none;
+        }
+
+        .skill-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .skill-option {
+            background: #333;
+            border: 2px solid #666;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-option:hover {
+            background: #444;
+            border-color: #999;
+        }
+
+        .skill-option.selected {
+            background: #667eea;
+            border-color: #ffd700;
+        }
+
+        .skill-name {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .skill-desc {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .skill-rarity {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .rarity-common { background: #888; color: #fff; }
+        .rarity-rare { background: #4169e1; color: #fff; }
+        .rarity-epic { background: #ff8c00; color: #fff; }
+
+        .confirm-btn, .start-game-btn, .start-actual-game-btn {
+            background: #4caf50;
+            border: 2px solid #45a049;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .confirm-btn:hover, .start-game-btn:hover, .start-actual-game-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .equipped-skills {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .equipped-skills h3 {
+            margin-top: 0;
+            color: #ffd700;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        .equipped-list {
+            min-height: 60px;
+            margin: 10px 0;
+        }
+
+        .equipped-item {
+            background: #444;
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #667eea;
+            border-radius: 3px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .start-game-btn.hidden {
+            display: none;
+        }
+
+        .start-game-btn {
+            width: 100%;
+            background: #ff6b6b;
+        }
+
+        .equipped-skills-display {
+            background: #222;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex-wrap: wrap;
+            min-height: 32px;
+        }
+
+        .skill-badge {
+            background: #667eea;
+            border: 1px solid #ffd700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .reset-btn, .discard-btn {
+            background: #ff4444;
+            border: 2px solid #cc0000;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+
+        .discard-btn {
+            margin-left: 10px;
+        }
+
+        .reset-btn:hover, .discard-btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .skill-menu-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .available-skills, .equipped-skills-menu {
+            flex: 1;
+        }
+
+        .available-skills-list, .equipped-skills-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 10px;
+            background: #222;
+        }
+
+        .skill-item, .equipped-skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            background: #333;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .skill-item:hover {
+            background: #444;
+        }
+
+        .equipped-skill-item {
+            cursor: default;
+        }
+
+        /* ランキング */
+        .ranking-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+
+        .rank-item {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .rank-item:hover {
+            background: #3a3a3a;
+            border-color: #777;
+        }
+
+        .rank-item.rank-1 {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-color: #ffa500;
+        }
+
+        .rank-item.rank-1 .rank-position,
+        .rank-item.rank-1 .rank-score,
+        .rank-item.rank-1 .rank-info,
+        .rank-item.rank-1 .rank-skills {
+            color: #000;
+        }
+
+        .rank-item.rank-2 {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            border-color: #a0a0a0;
+        }
+
+        .rank-item.rank-2 .rank-position,
+        .rank-item.rank-2 .rank-score,
+        .rank-item.rank-2 .rank-info,
+        .rank-item.rank-2 .rank-skills {
+            color: #000;
+        }
+
+        .rank-item.rank-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #e5a672 100%);
+            border-color: #b8732d;
+        }
+
+        .rank-item.rank-3 .rank-position,
+        .rank-item.rank-3 .rank-score,
+        .rank-item.rank-3 .rank-info,
+        .rank-item.rank-3 .rank-skills {
+            color: #fff;
+        }
+
+        .rank-position {
+            font-size: 28px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .rank-details {
+            flex: 1;
+        }
+
+        .rank-score {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .rank-info {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 3px;
+        }
+
+        .rank-skills {
+            font-size: 12px;
+            color: #888;
+        }
