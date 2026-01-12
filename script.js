@@ -1,4 +1,4 @@
-        const SIZE = 4;
+const SIZE = 4;
 const GAME_OVER_THRESHOLD = 6;
 const HOLE_START_TURN = 3;
 
@@ -543,11 +543,11 @@ function turnGame(dir) {
         }
     }
 
-    // 合法手がない場合は盤面リセット
+    // 合法手がない場合はゲームオーバー演出
     if (checkGameOver()) {
         if (score > bestScore) bestScore = score;
         saveGameData();
-        init();
+        // init()を削除 - ゲームオーバー画面から選択させる
     } else {
         updateDanger();
     }
@@ -574,7 +574,61 @@ function checkGameOver() {
     // ゲームオーバー時にランキング登録
     addToRanking(score, maxTile, turn);
     
+    // ゲームオーバー演出を表示
+    showGameOverScreen();
+    
     return true;
+}
+
+// ===== ゲームオーバー演出 =====
+function showGameOverScreen() {
+    const gameOverModal = document.getElementById("gameover-modal");
+    if (!gameOverModal) return;
+    
+    // スコア情報を表示
+    const finalScoreSpan = document.getElementById("final-score");
+    const finalMaxTileSpan = document.getElementById("final-max-tile");
+    const finalTurnSpan = document.getElementById("final-turn");
+    const finalCoinsSpan = document.getElementById("final-coins");
+    
+    if (finalScoreSpan) finalScoreSpan.textContent = score.toLocaleString();
+    if (finalMaxTileSpan) finalMaxTileSpan.textContent = maxTile;
+    if (finalTurnSpan) finalTurnSpan.textContent = turn;
+    if (finalCoinsSpan) finalCoinsSpan.textContent = coins;
+    
+    // ベストスコア更新チェック
+    const newRecordBadge = document.getElementById("new-record-badge");
+    if (newRecordBadge) {
+        if (score === bestScore && rankings.length > 0) {
+            newRecordBadge.style.display = "inline-block";
+        } else {
+            newRecordBadge.style.display = "none";
+        }
+    }
+    
+    gameOverModal.classList.add("show");
+}
+
+function continueWithSkills() {
+    // ゲームオーバーモーダルを閉じる
+    const gameOverModal = document.getElementById("gameover-modal");
+    if (gameOverModal) gameOverModal.classList.remove("show");
+    
+    // スキルメニューを開く
+    const skillMenuModal = document.getElementById("skill-menu-modal");
+    if (skillMenuModal) {
+        skillMenuModal.classList.add("show");
+        renderSkillMenu();
+    }
+}
+
+function restartWithoutSkills() {
+    // ゲームオーバーモーダルを閉じる
+    const gameOverModal = document.getElementById("gameover-modal");
+    if (gameOverModal) gameOverModal.classList.remove("show");
+    
+    // スキルをそのままでゲーム再開
+    init();
 }
 
 // ===== ランキング機能 =====
@@ -1250,6 +1304,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (rankingBtn) rankingBtn.addEventListener("click", showRanking);
     if (closeRankingBtn) closeRankingBtn.addEventListener("click", () => {
         if (rankingModal) rankingModal.classList.remove("show");
+    });
+
+    // ゲームオーバーボタン
+    const continueSkillBtn = document.getElementById("continue-with-skills-btn");
+    const restartSameBtn = document.getElementById("restart-same-skills-btn");
+    const closeGameOverBtn = document.getElementById("closeGameOverBtn");
+    const gameOverModal = document.getElementById("gameover-modal");
+
+    if (continueSkillBtn) continueSkillBtn.addEventListener("click", continueWithSkills);
+    if (restartSameBtn) restartSameBtn.addEventListener("click", restartWithoutSkills);
+    if (closeGameOverBtn) closeGameOverBtn.addEventListener("click", () => {
+        if (gameOverModal) gameOverModal.classList.remove("show");
     });
 
     window.addEventListener("click", (e) => {
