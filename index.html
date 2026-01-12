@@ -6,7 +6,6 @@
     <title>床が減っていく2048 ― Skill Mode</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div id="game">
         <div id="top-left"></div>
@@ -136,6 +135,45 @@
             <h2>🏆 ランキング TOP 10</h2>
             <p style="color: #aaa; font-size: 14px; margin: 10px 0;">あなたの過去の記録</p>
             <div id="ranking-list" class="ranking-list"></div>
+        </div>
+    </div>
+
+    <!-- ゲームオーバーモーダル -->
+    <div id="gameover-modal" class="modal">
+        <div class="modal-content gameover-content">
+            <button id="closeGameOverBtn" class="close-btn">&times;</button>
+            <div class="gameover-title">GAME OVER</div>
+            <div id="new-record-badge" class="new-record-badge" style="display: none;">
+                🎉 NEW RECORD! 🎉
+            </div>
+            
+            <div class="gameover-stats">
+                <div class="stat-item">
+                    <div class="stat-label">スコア</div>
+                    <div class="stat-value" id="final-score">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">最大タイル</div>
+                    <div class="stat-value" id="final-max-tile">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">ターン数</div>
+                    <div class="stat-value" id="final-turn">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">コイン</div>
+                    <div class="stat-value" id="final-coins">0</div>
+                </div>
+            </div>
+
+            <div class="gameover-buttons">
+                <button id="continue-with-skills-btn" class="continue-skill-btn">
+                    ⚔️ スキルを変更して再挑戦
+                </button>
+                <button id="restart-same-skills-btn" class="restart-same-btn">
+                    🔄 同じスキルで再挑戦
+                </button>
+            </div>
         </div>
     </div>
      <script src="script.js"></script>
