@@ -1,11 +1,17 @@
-    body {
+   * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
             font-family: sans-serif;
             background: #111;
             color: #fff;
             display: flex;
             justify-content: center;
-            margin-top: 20px;
-            padding: 20px;
+            margin: 0;
+            padding: 10px;
+            min-height: 100vh;
         }
 
         #game {
@@ -13,9 +19,76 @@
             grid-template-columns: 1fr 2fr 1fr;
             grid-template-rows: auto 1fr auto;
             gap: 10px;
-            width: 800px;
-            height: 600px;
+            width: 100%;
+            max-width: 800px;
             text-align: center;
+        }
+
+        /* スマホ対応 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+
+            #game {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto;
+                gap: 10px;
+                max-width: 100%;
+            }
+
+            #top-left, #bottom-left, #bottom-right {
+                display: none;
+            }
+
+            #middle-left, #middle-right {
+                order: 3;
+            }
+
+            #middle-center {
+                order: 2;
+            }
+
+            #top-right {
+                order: 1;
+            }
+
+            #bottom-center {
+                order: 4;
+            }
+
+            #board {
+                grid-template-columns: repeat(4, calc(25vw - 15px)) !important;
+                grid-gap: 3px !important;
+            }
+
+            .cell {
+                width: calc(25vw - 15px) !important;
+                height: calc(25vw - 15px) !important;
+                font-size: 18px !important;
+            }
+
+            #info {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 5px;
+                font-size: 14px;
+            }
+
+            .modal-content {
+                max-width: 95vw !important;
+                padding: 20px !important;
+            }
+
+            h1 {
+                font-size: 20px !important;
+            }
+
+            .gacha-btn, .rule-btn, .skill-menu-btn, .ranking-btn {
+                width: 35px !important;
+                height: 35px !important;
+                font-size: 20px !important;
+            }
         }
 
         #top-center {
@@ -29,6 +102,7 @@
             justify-content: flex-end;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         #middle-left {
@@ -53,6 +127,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         h1 {
@@ -61,10 +137,7 @@
             color: #fff;
         }
 
-        .gacha-btn,
-        .rule-btn,
-        .skill-menu-btn,
-        .ranking-btn {
+        .gacha-btn, .rule-btn, .skill-menu-btn, .ranking-btn {
             background: #444;
             border: 2px solid #666;
             color: #fff;
@@ -78,15 +151,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            touch-action: manipulation;
         }
 
-        .gacha-btn:hover,
-        .rule-btn:hover,
-        .skill-menu-btn:hover,
-        .ranking-btn:hover {
+        .gacha-btn:hover, .rule-btn:hover, .skill-menu-btn:hover, .ranking-btn:hover {
             background: #666;
             border-color: #999;
             transform: scale(1.1);
+        }
+
+        .gacha-btn:active, .rule-btn:active, .skill-menu-btn:active, .ranking-btn:active {
+            transform: scale(0.95);
         }
 
         #info {
@@ -114,6 +189,7 @@
             background: #333;
             padding: 5px;
             border-radius: 5px;
+            touch-action: none;
         }
 
         .pause-overlay {
@@ -129,6 +205,7 @@
             align-items: center;
             border-radius: 5px;
             display: none;
+            z-index: 10;
         }
 
         .pause-overlay.show {
@@ -158,6 +235,7 @@
             font-size: 24px;
             border-radius: 3px;
             transition: all 0.1s;
+            user-select: none;
         }
 
         .empty {
@@ -177,65 +255,21 @@
         }
 
         @keyframes danger-pulse {
-            from {
-                box-shadow: inset 0 0 0 3px #ff0000;
-            }
-
-            to {
-                box-shadow: inset 0 0 0 3px #ff6666;
-            }
+            from { box-shadow: inset 0 0 0 3px #ff0000; }
+            to { box-shadow: inset 0 0 0 3px #ff6666; }
         }
 
-        .v2 {
-            background: #eee;
-            color: #000;
-        }
-
-        .v4 {
-            background: #ddd;
-            color: #000;
-        }
-
-        .v8 {
-            background: #f2b179;
-        }
-
-        .v16 {
-            background: #f59563;
-        }
-
-        .v32 {
-            background: #f67c5f;
-        }
-
-        .v64 {
-            background: #f65e3b;
-        }
-
-        .v128 {
-            background: #edcf72;
-            color: #000;
-        }
-
-        .v256 {
-            background: #edcc61;
-            color: #000;
-        }
-
-        .v512 {
-            background: #edc850;
-            color: #000;
-        }
-
-        .v1024 {
-            background: #edc53f;
-            color: #000;
-        }
-
-        .v2048 {
-            background: #edc22e;
-            color: #000;
-        }
+        .v2 { background: #eee; color: #000; }
+        .v4 { background: #ddd; color: #000; }
+        .v8 { background: #f2b179; }
+        .v16 { background: #f59563; }
+        .v32 { background: #f67c5f; }
+        .v64 { background: #f65e3b; }
+        .v128 { background: #edcf72; color: #000; }
+        .v256 { background: #edcc61; color: #000; }
+        .v512 { background: #edc850; color: #000; }
+        .v1024 { background: #edc53f; color: #000; }
+        .v2048 { background: #edc22e; color: #000; }
 
         .modal {
             display: none;
@@ -247,25 +281,580 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
             animation: fadeIn 0.3s;
+            overflow-y: auto;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal.show {
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .modal-content {
+            background-color: #222;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid #666;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: #fff;
+            border-bottom: 2px solid #666;
+            padding-bottom: 10px;
+        }
+
+        .modal-content h3 {
+            color: #ffd700;
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        .rule-text ul {
+            text-align: left;
+            margin: 8px 0;
+            padding-left: 20px;
+        }
+
+        .rule-text li {
+            margin: 5px 0;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #999;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+            padding: 5px 10px;
+            touch-action: manipulation;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .gacha-info, .skill-info {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .gacha-get-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 2px solid #ff9800;
+            color: #000;
+            font-size: 18px;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 15px 0;
+            touch-action: manipulation;
+        }
+
+        .gacha-get-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        .gacha-get-btn:active {
+            transform: scale(0.95);
+        }
+
+        .gacha-result {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .gacha-result.hidden {
+            display: none;
+        }
+
+        .gacha-card {
+            width: 80px;
+            height: 110px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            animation: cardFlip 0.6s ease-out;
+        }
+
+        @keyframes cardFlip {
+            from {
+                transform: rotateY(90deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotateY(0);
+                opacity: 1;
+            }
+        }
+
+        .skill-selection {
+            margin: 20px 0;
+        }
+
+        .skill-selection.hidden {
+            display: none;
+        }
+
+        .skill-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin: 15px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        .skill-option {
+            background: #333;
+            border: 2px solid #666;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            touch-action: manipulation;
+        }
+
+        .skill-option:hover {
+            background: #444;
+            border-color: #999;
+        }
+
+        .skill-option:active {
+            transform: scale(0.98);
+        }
+
+        .skill-option.selected {
+            background: #667eea;
+            border-color: #ffd700;
+        }
+
+        .skill-name {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 3px;
+        }
+
+        .skill-desc {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .skill-rarity {
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .rarity-common { background: #888; color: #fff; }
+        .rarity-rare { background: #4169e1; color: #fff; }
+        .rarity-epic { background: #ff8c00; color: #fff; }
+
+        .confirm-btn, .start-game-btn, .start-actual-game-btn {
+            background: #4caf50;
+            border: 2px solid #45a049;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            touch-action: manipulation;
+            width: 100%;
+        }
+
+        .confirm-btn:hover, .start-game-btn:hover, .start-actual-game-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .confirm-btn:active, .start-game-btn:active, .start-actual-game-btn:active {
+            transform: scale(0.95);
+        }
+
+        .equipped-skills {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .equipped-skills h3 {
+            margin-top: 0;
+            color: #ffd700;
+            border-bottom: 2px solid #666;
+            padding-bottom: 8px;
+        }
+
+        .equipped-list {
+            min-height: 60px;
+            margin: 10px 0;
+        }
+
+        .equipped-item {
+            background: #444;
+            padding: 8px;
+            margin: 5px 0;
+            border-left: 3px solid #667eea;
+            border-radius: 3px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .start-game-btn.hidden {
+            display: none;
+        }
+
+        .start-game-btn {
+            background: #ff6b6b;
+        }
+
+        .equipped-skills-display {
+            background: #222;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            flex-wrap: wrap;
+            min-height: 32px;
+        }
+
+        .skill-badge {
+            background: #667eea;
+            border: 1px solid #ffd700;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .reset-btn, .discard-btn {
+            background: #ff4444;
+            border: 2px solid #cc0000;
+            color: #fff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            touch-action: manipulation;
+        }
+
+        .reset-btn:hover, .discard-btn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .reset-btn:active, .discard-btn:active {
+            transform: scale(0.95);
+        }
+
+        .skill-menu-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .skill-menu-content {
+                flex-direction: column;
+            }
+        }
+
+        .available-skills, .equipped-skills-menu {
+            flex: 1;
+        }
+
+        .available-skills-list, .equipped-skills-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #444;
+            border-radius: 5px;
+            padding: 10px;
+            background: #222;
+        }
+
+        .skill-item, .equipped-skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            background: #333;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+            touch-action: manipulation;
+        }
+
+        .skill-item:hover {
+            background: #444;
+        }
+
+        .skill-item:active {
+            transform: scale(0.98);
+        }
+
+        .equipped-skill-item {
+            cursor: default;
+        }
+
+        /* ランキング */
+        .ranking-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+
+        .rank-item {
+            background: #333;
+            border: 2px solid #555;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .rank-item:hover {
+            background: #3a3a3a;
+            border-color: #777;
+        }
+
+        .rank-item.rank-1 {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-color: #ffa500;
+        }
+
+        .rank-item.rank-1 .rank-position,
+        .rank-item.rank-1 .rank-score,
+        .rank-item.rank-1 .rank-info,
+        .rank-item.rank-1 .rank-skills {
+            color: #000;
+        }
+
+        .rank-item.rank-2 {
+            background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%);
+            border-color: #a0a0a0;
+        }
+
+        .rank-item.rank-2 .rank-position,
+        .rank-item.rank-2 .rank-score,
+        .rank-item.rank-2 .rank-info,
+        .rank-item.rank-2 .rank-skills {
+            color: #000;
+        }
+
+        .rank-item.rank-3 {
+            background: linear-gradient(135deg, #cd7f32 0%, #e5a672 100%);
+            border-color: #b8732d;
+        }
+
+        .rank-item.rank-3 .rank-position,
+        .rank-item.rank-3 .rank-score,
+        .rank-item.rank-3 .rank-info,
+        .rank-item.rank-3 .rank-skills {
+            color: #fff;
+        }
+
+        .rank-position {
+            font-size: 28px;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .rank-details {
+            flex: 1;
+        }
+
+        .rank-score {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .rank-info {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 3px;
+        }
+
+        .rank-skills {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* ゲームオーバーモーダル */
+        .gameover-content {
+            text-align: center;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .gameover-title {
+            font-size: 48px;
+            color: #ff6b6b;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            animation: gameoverPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes gameoverPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .new-record-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 10px 0;
+            animation: badgeBounce 0.5s ease-in-out;
+        }
+
+        @keyframes badgeBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .gameover-stats {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .gameover-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .continue-skill-btn, .restart-same-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            touch-action: manipulation;
+            width: 100%;
+        }
+
+        .continue-skill-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .continue-skill-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .continue-skill-btn:active {
+            transform: scale(0.95);
+        }
+
+        .restart-same-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .restart-same-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .restart-same-btn:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>.modal-content {
             background-color: #222;
             padding: 30px;
             border-radius: 10px;
@@ -282,7 +871,6 @@
                 transform: translateY(-50px);
                 opacity: 0;
             }
-
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -331,8 +919,7 @@
             color: #fff;
         }
 
-        .gacha-info,
-        .skill-info {
+        .gacha-info, .skill-info {
             margin: 15px 0;
             font-size: 14px;
             color: #ccc;
@@ -386,7 +973,6 @@
                 transform: rotateY(90deg);
                 opacity: 0;
             }
-
             to {
                 transform: rotateY(0);
                 opacity: 1;
@@ -451,24 +1037,11 @@
             font-weight: bold;
         }
 
-        .rarity-common {
-            background: #888;
-            color: #fff;
-        }
+        .rarity-common { background: #888; color: #fff; }
+        .rarity-rare { background: #4169e1; color: #fff; }
+        .rarity-epic { background: #ff8c00; color: #fff; }
 
-        .rarity-rare {
-            background: #4169e1;
-            color: #fff;
-        }
-
-        .rarity-epic {
-            background: #ff8c00;
-            color: #fff;
-        }
-
-        .confirm-btn,
-        .start-game-btn,
-        .start-actual-game-btn {
+        .confirm-btn, .start-game-btn, .start-actual-game-btn {
             background: #4caf50;
             border: 2px solid #45a049;
             color: #fff;
@@ -480,9 +1053,7 @@
             transition: all 0.3s;
         }
 
-        .confirm-btn:hover,
-        .start-game-btn:hover,
-        .start-actual-game-btn:hover {
+        .confirm-btn:hover, .start-game-btn:hover, .start-actual-game-btn:hover {
             background: #45a049;
             transform: scale(1.05);
         }
@@ -551,8 +1122,7 @@
             gap: 3px;
         }
 
-        .reset-btn,
-        .discard-btn {
+        .reset-btn, .discard-btn {
             background: #ff4444;
             border: 2px solid #cc0000;
             color: #fff;
@@ -568,8 +1138,7 @@
             margin-left: 10px;
         }
 
-        .reset-btn:hover,
-        .discard-btn:hover {
+        .reset-btn:hover, .discard-btn:hover {
             background: #cc0000;
             transform: scale(1.05);
         }
@@ -579,13 +1148,11 @@
             gap: 20px;
         }
 
-        .available-skills,
-        .equipped-skills-menu {
+        .available-skills, .equipped-skills-menu {
             flex: 1;
         }
 
-        .available-skills-list,
-        .equipped-skills-list {
+        .available-skills-list, .equipped-skills-list {
             max-height: 300px;
             overflow-y: auto;
             border: 1px solid #444;
@@ -594,8 +1161,7 @@
             background: #222;
         }
 
-        .skill-item,
-        .equipped-skill-item {
+        .skill-item, .equipped-skill-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -718,15 +1284,8 @@
         }
 
         @keyframes gameoverPulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .new-record-badge {
@@ -742,15 +1301,8 @@
         }
 
         @keyframes badgeBounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .gameover-stats {
@@ -786,8 +1338,7 @@
             margin-top: 20px;
         }
 
-        .continue-skill-btn,
-        .restart-same-btn {
+        .continue-skill-btn, .restart-same-btn {
             padding: 15px 30px;
             font-size: 18px;
             border-radius: 8px;
