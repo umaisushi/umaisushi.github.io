@@ -1,4 +1,3 @@
-    <script>
         const SIZE = 4;
 const GAME_OVER_THRESHOLD = 6;
 const HOLE_START_TURN = 3;
@@ -1275,4 +1274,3 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(saveGameData, 30000);
 });
-    </script>
