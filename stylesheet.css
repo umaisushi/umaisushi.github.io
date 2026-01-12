@@ -1,5 +1,5 @@
-        body {
-          font-family: sans-serif;
+    body {
+            font-family: sans-serif;
             background: #111;
             color: #fff;
             display: flex;
@@ -61,7 +61,10 @@
             color: #fff;
         }
 
-        .gacha-btn, .rule-btn, .skill-menu-btn, .ranking-btn {
+        .gacha-btn,
+        .rule-btn,
+        .skill-menu-btn,
+        .ranking-btn {
             background: #444;
             border: 2px solid #666;
             color: #fff;
@@ -77,7 +80,10 @@
             align-items: center;
         }
 
-        .gacha-btn:hover, .rule-btn:hover, .skill-menu-btn:hover, .ranking-btn:hover {
+        .gacha-btn:hover,
+        .rule-btn:hover,
+        .skill-menu-btn:hover,
+        .ranking-btn:hover {
             background: #666;
             border-color: #999;
             transform: scale(1.1);
@@ -171,21 +177,65 @@
         }
 
         @keyframes danger-pulse {
-            from { box-shadow: inset 0 0 0 3px #ff0000; }
-            to { box-shadow: inset 0 0 0 3px #ff6666; }
+            from {
+                box-shadow: inset 0 0 0 3px #ff0000;
+            }
+
+            to {
+                box-shadow: inset 0 0 0 3px #ff6666;
+            }
         }
 
-        .v2 { background: #eee; color: #000; }
-        .v4 { background: #ddd; color: #000; }
-        .v8 { background: #f2b179; }
-        .v16 { background: #f59563; }
-        .v32 { background: #f67c5f; }
-        .v64 { background: #f65e3b; }
-        .v128 { background: #edcf72; color: #000; }
-        .v256 { background: #edcc61; color: #000; }
-        .v512 { background: #edc850; color: #000; }
-        .v1024 { background: #edc53f; color: #000; }
-        .v2048 { background: #edc22e; color: #000; }
+        .v2 {
+            background: #eee;
+            color: #000;
+        }
+
+        .v4 {
+            background: #ddd;
+            color: #000;
+        }
+
+        .v8 {
+            background: #f2b179;
+        }
+
+        .v16 {
+            background: #f59563;
+        }
+
+        .v32 {
+            background: #f67c5f;
+        }
+
+        .v64 {
+            background: #f65e3b;
+        }
+
+        .v128 {
+            background: #edcf72;
+            color: #000;
+        }
+
+        .v256 {
+            background: #edcc61;
+            color: #000;
+        }
+
+        .v512 {
+            background: #edc850;
+            color: #000;
+        }
+
+        .v1024 {
+            background: #edc53f;
+            color: #000;
+        }
+
+        .v2048 {
+            background: #edc22e;
+            color: #000;
+        }
 
         .modal {
             display: none;
@@ -200,8 +250,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .modal.show {
@@ -227,6 +282,7 @@
                 transform: translateY(-50px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -275,7 +331,8 @@
             color: #fff;
         }
 
-        .gacha-info, .skill-info {
+        .gacha-info,
+        .skill-info {
             margin: 15px 0;
             font-size: 14px;
             color: #ccc;
@@ -329,6 +386,7 @@
                 transform: rotateY(90deg);
                 opacity: 0;
             }
+
             to {
                 transform: rotateY(0);
                 opacity: 1;
@@ -393,11 +451,24 @@
             font-weight: bold;
         }
 
-        .rarity-common { background: #888; color: #fff; }
-        .rarity-rare { background: #4169e1; color: #fff; }
-        .rarity-epic { background: #ff8c00; color: #fff; }
+        .rarity-common {
+            background: #888;
+            color: #fff;
+        }
 
-        .confirm-btn, .start-game-btn, .start-actual-game-btn {
+        .rarity-rare {
+            background: #4169e1;
+            color: #fff;
+        }
+
+        .rarity-epic {
+            background: #ff8c00;
+            color: #fff;
+        }
+
+        .confirm-btn,
+        .start-game-btn,
+        .start-actual-game-btn {
             background: #4caf50;
             border: 2px solid #45a049;
             color: #fff;
@@ -409,7 +480,9 @@
             transition: all 0.3s;
         }
 
-        .confirm-btn:hover, .start-game-btn:hover, .start-actual-game-btn:hover {
+        .confirm-btn:hover,
+        .start-game-btn:hover,
+        .start-actual-game-btn:hover {
             background: #45a049;
             transform: scale(1.05);
         }
@@ -478,7 +551,8 @@
             gap: 3px;
         }
 
-        .reset-btn, .discard-btn {
+        .reset-btn,
+        .discard-btn {
             background: #ff4444;
             border: 2px solid #cc0000;
             color: #fff;
@@ -494,7 +568,8 @@
             margin-left: 10px;
         }
 
-        .reset-btn:hover, .discard-btn:hover {
+        .reset-btn:hover,
+        .discard-btn:hover {
             background: #cc0000;
             transform: scale(1.05);
         }
@@ -504,11 +579,13 @@
             gap: 20px;
         }
 
-        .available-skills, .equipped-skills-menu {
+        .available-skills,
+        .equipped-skills-menu {
             flex: 1;
         }
 
-        .available-skills-list, .equipped-skills-list {
+        .available-skills-list,
+        .equipped-skills-list {
             max-height: 300px;
             overflow-y: auto;
             border: 1px solid #444;
@@ -517,7 +594,8 @@
             background: #222;
         }
 
-        .skill-item, .equipped-skill-item {
+        .skill-item,
+        .equipped-skill-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -624,4 +702,117 @@
         .rank-skills {
             font-size: 12px;
             color: #888;
+        }
+
+        /* ゲームオーバーモーダル */
+        .gameover-content {
+            text-align: center;
+        }
+
+        .gameover-title {
+            font-size: 48px;
+            color: #ff6b6b;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            animation: gameoverPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes gameoverPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .new-record-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            margin: 10px 0;
+            animation: badgeBounce 0.5s ease-in-out;
+        }
+
+        @keyframes badgeBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .gameover-stats {
+            background: #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            color: #aaa;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .gameover-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .continue-skill-btn,
+        .restart-same-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .continue-skill-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .continue-skill-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .restart-same-btn {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .restart-same-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
         }
